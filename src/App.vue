@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 
-const message = ref("Hello World!");
+const header = ref("Shopping List Application");
 </script>
 
 <template>
@@ -24,9 +24,12 @@ const message = ref("Hello World!");
     </nav>
   </header>
 
-  <h1>{{ message }}</h1>
-  <input v-model="message" />
-  <input v-model="message" />
+  <!-- <h1>{{ message.toLocaleUpperCase() }}</h1>
+
+  <h1>{{ message ? message : "Welcome" }}</h1>
+  <h1>{{ message || "Welcome" }}</h1> -->
+
+  <h1>{{ header }}</h1>
 
   <!-- <RouterView /> -->
 </template>
