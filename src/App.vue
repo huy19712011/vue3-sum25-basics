@@ -5,10 +5,10 @@ import { RouterLink, RouterView } from "vue-router";
 const header = ref("Shopping List Application");
 
 const items = ref([
-  { id: 1, label: "10 product-1" },
-  { id: 2, label: "2 product-2" },
-  { id: 3, label: "3 product-3" },
-  { id: 4, label: "4 product-4" },
+  // { id: 1, label: "10 product-1" },
+  // { id: 2, label: "2 product-2" },
+  // { id: 3, label: "3 product-3" },
+  // { id: 4, label: "4 product-4" },
 ]);
 
 const newItem = ref("");
@@ -17,6 +17,13 @@ const newItemHighPriority = ref(false);
 
 const saveItem = () => {
   items.value.push({ id: items.value.length + 1, label: newItem.value });
+  newItem.value = "";
+};
+
+const editing = ref(false);
+
+const doEdit = (e) => {
+  editing.value = e;
   newItem.value = "";
 };
 </script>
@@ -40,8 +47,12 @@ const saveItem = () => {
     </nav>
   </header>
 
-  <h1>{{ header }}</h1>
-  <form class="add-item-form" v-on:submit.prevent="saveItem">
+  <div class="header">
+    <h1>{{ header }}</h1>
+    <button v-if="editing" class="btn" @click="doEdit(false)">Cancel</button>
+    <button v-else class="btn btn-primary" @click="doEdit(true)">Add Item</button>
+  </div>
+  <form class="add-item-form" v-if="editing" v-on:submit.prevent="saveItem">
     <input v-model.trim="newItem" type="text" placeholder="Add an Item" />
     <!-- {{ newItem }} -->
 
@@ -55,6 +66,7 @@ const saveItem = () => {
     <!-- <li v-for="{ id, label } in items" v-bind:key="id">{{ label }}</li> -->
     <li v-for="({ id, label }, index) in items" v-bind:key="id">{{ index }}: {{ label }}</li>
   </ul>
+  <p v-if="!items.length">Nothing to see here!</p>
 
   <!-- <RouterView /> -->
 </template>
