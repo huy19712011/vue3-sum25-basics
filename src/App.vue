@@ -52,6 +52,7 @@ const doEdit = (e) => {
     <button v-if="editing" class="btn" @click="doEdit(false)">Cancel</button>
     <button v-else class="btn btn-primary" @click="doEdit(true)">Add Item</button>
   </div>
+  <!-- <a v-bind:href="newItem">Dynamic Link</a> -->
   <form class="add-item-form" v-if="editing" v-on:submit.prevent="saveItem">
     <input v-model.trim="newItem" type="text" placeholder="Add an Item" />
     <!-- {{ newItem }} -->
@@ -60,7 +61,8 @@ const doEdit = (e) => {
       <input type="checkbox" v-model="newItemHighPriority" />
       High Priority
     </label>
-    <button class="btn btn-primary">Save Item</button>
+    <!-- <button v-bind:disabled="newItem.length < 2" class="btn btn-primary">Save Item</button> -->
+    <button :disabled="newItem.length < 2" class="btn btn-primary">Save Item</button>
   </form>
   <ul>
     <!-- <li v-for="{ id, label } in items" v-bind:key="id">{{ label }}</li> -->
