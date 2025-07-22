@@ -5,10 +5,10 @@ import { RouterLink, RouterView } from "vue-router";
 const header = ref("Shopping List Application");
 
 const items = ref([
-  // { id: 1, label: "10 product-1" },
-  // { id: 2, label: "2 product-2" },
-  // { id: 3, label: "3 product-3" },
-  // { id: 4, label: "4 product-4" },
+  { id: 1, label: "10 product-1", purchased: true, highPriority: false },
+  { id: 2, label: "2 product-2", purchased: true, highPriority: false },
+  { id: 3, label: "3 product-3", purchased: false, highPriority: true },
+  { id: 4, label: "4 product-4", purchased: false, highPriority: true },
 ]);
 
 const newItem = ref("");
@@ -16,8 +16,13 @@ const newItem = ref("");
 const newItemHighPriority = ref(false);
 
 const saveItem = () => {
-  items.value.push({ id: items.value.length + 1, label: newItem.value });
+  items.value.push({
+    id: items.value.length + 1,
+    label: newItem.value,
+    highPriority: newItemHighPriority.value,
+  });
   newItem.value = "";
+  newItemHighPriority.value = false;
 };
 
 const editing = ref(false);
@@ -25,6 +30,10 @@ const editing = ref(false);
 const doEdit = (e) => {
   editing.value = e;
   newItem.value = "";
+};
+
+const togglePurchased = (item) => {
+  item.purchased = !item.purchased;
 };
 </script>
 
@@ -66,7 +75,34 @@ const doEdit = (e) => {
   </form>
   <ul>
     <!-- <li v-for="{ id, label } in items" v-bind:key="id">{{ label }}</li> -->
-    <li v-for="({ id, label }, index) in items" v-bind:key="id">{{ index }}: {{ label }}</li>
+    <!-- object syntax -->
+    <li
+      v-for="({ id, label, purchased, highPriority }, index) in items"
+      v-bind:key="id"
+      class="static-class"
+      :class="{ strikeout: purchased, priority: highPriority }"
+      @click="togglePurchased(items[index])"
+    >
+      {{ index + 1 }}: {{ label }}
+    </li>
+    <!-- array syntax -->
+    <li
+      v-for="({ id, label, purchased, highPriority }, index) in items"
+      v-bind:key="id"
+      class="static-class"
+      :class="[purchased ? 'strikeout text-gray' : 'underlined', highPriority ? 'priority' : '']"
+    >
+      {{ index + 1 }}: {{ label }}
+    </li>
+    <!-- array + object syntax -->
+    <li
+      v-for="({ id, label, purchased, highPriority }, index) in items"
+      v-bind:key="id"
+      class="static-class"
+      :class="[{ strikeout: purchased }, { priority: highPriority }]"
+    >
+      {{ index + 1 }}: {{ label }}
+    </li>
   </ul>
   <p v-if="!items.length">Nothing to see here!</p>
 
