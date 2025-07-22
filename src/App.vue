@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 
 const header = ref("Shopping List Application");
@@ -35,6 +35,14 @@ const doEdit = (e) => {
 const togglePurchased = (item) => {
   item.purchased = !item.purchased;
 };
+
+const characterCount = computed(() => {
+  return newItem.value.length;
+});
+
+const reversedItems = computed(() => {
+  return [...items.value].reverse();
+});
 </script>
 
 <template>
@@ -73,11 +81,13 @@ const togglePurchased = (item) => {
     <!-- <button v-bind:disabled="newItem.length < 2" class="btn btn-primary">Save Item</button> -->
     <button :disabled="newItem.length < 2" class="btn btn-primary">Save Item</button>
   </form>
+  <p class="counter">{{ characterCount }}/200</p>
+
   <ul>
     <!-- <li v-for="{ id, label } in items" v-bind:key="id">{{ label }}</li> -->
     <!-- object syntax -->
     <li
-      v-for="({ id, label, purchased, highPriority }, index) in items"
+      v-for="({ id, label, purchased, highPriority }, index) in reversedItems"
       v-bind:key="id"
       class="static-class"
       :class="{ strikeout: purchased, priority: highPriority }"
