@@ -58,65 +58,16 @@ const reversedItems = computed(() => {
             <li class="nav-item">
               <RouterLink class="nav-link" to="/about">About</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/student">Student</RouterLink>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
 
-  <div class="header">
-    <h1>{{ header }}</h1>
-    <button v-if="editing" class="btn" @click="doEdit(false)">Cancel</button>
-    <button v-else class="btn btn-primary" @click="doEdit(true)">Add Item</button>
-  </div>
-  <!-- <a v-bind:href="newItem">Dynamic Link</a> -->
-  <form class="add-item-form" v-if="editing" v-on:submit.prevent="saveItem">
-    <input v-model.trim="newItem" type="text" placeholder="Add an Item" />
-    <!-- {{ newItem }} -->
-
-    <label>
-      <input type="checkbox" v-model="newItemHighPriority" />
-      High Priority
-    </label>
-    <!-- <button v-bind:disabled="newItem.length < 2" class="btn btn-primary">Save Item</button> -->
-    <button :disabled="newItem.length < 2" class="btn btn-primary">Save Item</button>
-  </form>
-  <p class="counter">{{ characterCount }}/200</p>
-
-  <ul>
-    <!-- <li v-for="{ id, label } in items" v-bind:key="id">{{ label }}</li> -->
-    <!-- object syntax -->
-    <li
-      v-for="({ id, label, purchased, highPriority }, index) in reversedItems"
-      v-bind:key="id"
-      class="static-class"
-      :class="{ strikeout: purchased, priority: highPriority }"
-      @click="togglePurchased(items[index])"
-    >
-      {{ index + 1 }}: {{ label }}
-    </li>
-    <!-- array syntax -->
-    <li
-      v-for="({ id, label, purchased, highPriority }, index) in items"
-      v-bind:key="id"
-      class="static-class"
-      :class="[purchased ? 'strikeout text-gray' : 'underlined', highPriority ? 'priority' : '']"
-    >
-      {{ index + 1 }}: {{ label }}
-    </li>
-    <!-- array + object syntax -->
-    <li
-      v-for="({ id, label, purchased, highPriority }, index) in items"
-      v-bind:key="id"
-      class="static-class"
-      :class="[{ strikeout: purchased }, { priority: highPriority }]"
-    >
-      {{ index + 1 }}: {{ label }}
-    </li>
-  </ul>
-  <p v-if="!items.length">Nothing to see here!</p>
-
-  <!-- <RouterView /> -->
+  <RouterView />
 </template>
 
 <style scoped></style>
