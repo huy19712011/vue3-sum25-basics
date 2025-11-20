@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import BookManager from "@/components/BookManager.vue";
 import StudentManager from "@/components/StudentManager.vue";
 
 const router = createRouter({
@@ -22,6 +23,11 @@ const router = createRouter({
       path: "/student",
       name: "student",
       component: StudentManager,
+    },
+    {
+      path: "/book",
+      name: "book",
+      component: BookManager,
     },
   ],
 });
